@@ -273,3 +273,17 @@ fieldset.field legend { margin-bottom: 10px; }
   .toast { bottom: 16px; right: 16px; }
 }
 
+/* section: mobile editor */
+@media (max-width: 440px) {
+  .dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px); }
+  .dialog-header, .dialog-body, .dialog-footer { padding-inline: 18px; }
+  .dialog-body { padding-block: 19px; }
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+  .dialog-footer .hint { flex-basis: 100%; }
+  .dialog-footer .button { flex: 1; }
+  .shortcut-grid { column-gap: 10px; font-size: 12px; }
+  .view-list .note { grid-template-columns: 1fr; }
+  .view-list .note-top, .view-list .note-title, .view-list .note-preview, .view-list .note-tags, .view-list .note-bottom { grid-column: 1; grid-row: auto; }
+  .view-list .note-bottom { flex-direction: row; align-items: center; margin-top: 14px; }
+}
+
