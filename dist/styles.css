@@ -365,3 +365,12 @@ body[data-theme='light'] .toast button { color: #e7f1d0; }
 /* section: day shift secondary text */
 body[data-theme='light'] #footer-help, body[data-theme='light'] .statusbar > span:last-child, body[data-theme='light'] .search-wrap kbd, body[data-theme='light'] .nav-link .count { color: #536143; }
 
+/* section: checklist rows */
+.note-preview.task-list { display: block; white-space: normal; }
+.task { display: flex; align-items: flex-start; gap: 9px; margin: 0 0 9px; line-height: 1.7; cursor: pointer; }
+.task:last-child { margin-bottom: 0; }
+.task input { flex: 0 0 14px; width: 14px; height: 14px; margin: 3px 0 0; accent-color: #526d34; }
+.task span { min-width: 0; overflow-wrap: anywhere; }
+.task.checked span { text-decoration: line-through; color: #657253; }
+.task:has(input:disabled) { cursor: default; }
+
