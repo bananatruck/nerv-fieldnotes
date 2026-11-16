@@ -7,7 +7,7 @@ The test workspace uses a temporary data directory, keeping personal notes untou
 
 - 26 Rust unit tests passed.
 - 4 executable CLI integration scenarios passed against the release binary.
-- 22 native GTK checks passed against the optimized release binary, with critical GTK messages treated as fatal.
+- 23 native GTK checks passed against the optimized release binary, with critical GTK messages treated as fatal.
 - Single-instance dispatch passed for repeated board and new-note requests on an isolated session bus.
 - Clippy passed for all targets with warnings denied.
 - The installed executable checksum matches the verified release binary.
@@ -43,6 +43,7 @@ For a release build installed by the installer, use `target/release/nerv-fieldno
 
 The installed desktop file is `dev.kesh.Fieldnotes.desktop`, matching the GTK application ID for Wayland grouping.
 It includes New note and All notes actions.
+The board is registered with the desktop only when requested from the sticky menu.
 The default launch opens the recent sticky, and repeated normal launches route to the same application instance.
 Explicit `--data-dir` sessions are independent instances for separate workspaces and testing.
 
