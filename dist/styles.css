@@ -109,3 +109,16 @@ h1 span { color: var(--text); }
 .danger:hover { background: #5c2c24; }
 kbd { font-family: var(--mono); }
 
+/* section: note grid */
+.note-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; padding-bottom: 42px; }
+.note { --note-color: var(--paper); --note-accent: #7a6a38; background: var(--note-color); color: #282b20; min-height: 250px; display: flex; flex-direction: column; position: relative; border: 1px solid #ffffe928; border-top: 3px solid var(--note-accent); padding: 17px 19px 13px; box-shadow: 3px 4px 0 #0003; transition: transform 120ms ease, box-shadow 120ms ease; }
+.note:hover { transform: translateY(-2px); box-shadow: 4px 7px 0 #0004; }
+.note[data-color='paper'] { --note-color: #e8e4cf; --note-accent: #9b9b70; }
+.note[data-color='amber'] { --note-color: #e8c67f; --note-accent: #9f622d; }
+.note[data-color='red'] { --note-color: #e3aba0; --note-accent: #a64636; }
+.note[data-color='green'] { --note-color: #c2cea6; --note-accent: #657c43; }
+.note[data-color='purple'] { --note-color: #c7bed2; --note-accent: #79628c; }
+.note::after { content: ''; position: absolute; right: -1px; bottom: -1px; border-style: solid; border-width: 0 0 13px 13px; border-color: transparent transparent var(--canvas) #0002; }
+.note.pinned { border-top-color: #b74c2e; }
+.pin-indicator { color: #843a24; display: inline-flex; align-items: center; gap: 4px; font-size: 9px; letter-spacing: 1px; }
+
