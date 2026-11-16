@@ -41,3 +41,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round
 .skip-link { position: fixed; top: -100px; left: 16px; background: var(--amber); color: var(--ink); z-index: 100; padding: 12px 18px; }
 .skip-link:focus { top: 16px; }
 
+/* section: application frame */
+.app-shell { display: grid; grid-template-columns: 222px minmax(0, 1fr); min-height: 100vh; }
+.sidebar { background: var(--sidebar); border-right: 1px solid var(--line); position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 30px 18px 20px; z-index: 20; }
+.main { min-width: 0; background-image: linear-gradient(#ffffff02 1px, transparent 1px), linear-gradient(90deg, #ffffff02 1px, transparent 1px); background-size: 28px 28px; padding: 0 42px; }
+
