@@ -362,3 +362,6 @@ body[data-theme='light'] .toast button { color: #e7f1d0; }
 .icon-button.mobile-nav-toggle { display: none; }
 @media (max-width: 640px) { .icon-button.mobile-nav-toggle { display: inline-grid; } }
 
+/* section: day shift secondary text */
+body[data-theme='light'] #footer-help, body[data-theme='light'] .statusbar > span:last-child, body[data-theme='light'] .search-wrap kbd, body[data-theme='light'] .nav-link .count { color: #536143; }
+
