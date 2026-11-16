@@ -252,3 +252,15 @@ function renderInbox() {
   }
 }
 
+// section: backup export and import
+function exportBackup() { download(`fieldnotes-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), notes: state.notes }, null, 2), 'application/json'); toast('Backup exported. It includes archived and deleted notes.'); }
+async function importBackup(event) {
+  const file = event.target.files[0]; if (!file) return;
+  try {
+    if (file.size > 20 * 1024 * 1024) throw new Error('Backup is too large. Maximum size is 20 MB.');
+    const incoming = parseBackup(await file.text());
+    if (persist(mergeNotes(state.notes, incoming))) toast(`Imported ${incoming.length} notes. Newer local edits were kept.`);
+  } catch (error) { toast(error.message); }
+  finally { event.target.value = ''; }
+}
+
