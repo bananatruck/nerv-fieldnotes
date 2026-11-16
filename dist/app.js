@@ -82,3 +82,23 @@ function notePreview(note) {
   return list;
 }
 
+// section: note card rendering
+function noteCard(note) {
+  const action = (label, symbol, fn, extra = '') => el('button', { class: `icon-button ${extra}`, title: label, 'aria-label': `${label}: ${note.title || 'Untitled'}`, onclick: fn }, symbol);
+  const tools = el('div', { class: 'note-tools' });
+  if (note.status === 'active') tools.append(action(note.pinned ? 'Unpin' : 'Pin', '⌖', () => updateNote(note.id, { pinned: !note.pinned }), note.pinned ? 'is-pinned' : ''));
+  const actions = el('div', { class: 'note-actions' });
+  if (note.status === 'deleted') actions.append(action('Restore', '↶', () => move(note, 'active')), action('Delete forever', '×', () => deleteForever(note)));
+  else {
+    actions.append(action('Forward to agent', '↗', () => openForward(note)));
+    actions.append(action('Duplicate', '⧉', () => duplicate(note)));
+    actions.append(action(note.status === 'archived' ? 'Unarchive' : 'Archive', note.status === 'archived' ? '↶' : '▤', () => move(note, note.status === 'archived' ? 'active' : 'archived')));
+    actions.append(action('Move to trash', '×', () => move(note, 'deleted')));
+  }
+  return el('article', { class: `note${note.pinned ? ' pinned' : ''}`, 'data-color': note.color, 'data-id': note.id },
+    el('div', { class: 'note-top' }, el('span', { class: 'note-category' }, note.checklist ? 'CHECKLIST' : 'FIELD NOTE'), tools),
+    el('button', { class: 'note-title', onclick: () => openEditor(note), 'aria-label': `Edit ${note.title || 'Untitled note'}` }, note.title || 'Untitled note'),
+    notePreview(note), el('div', { class: 'note-tags' }, ...note.tags.map(t => el('button', { class: 'tag', onclick: () => navigate('all', t) }, `#${t}`))),
+    el('div', { class: 'note-bottom' }, el('time', { class: 'note-date', datetime: note.updatedAt, title: new Date(note.updatedAt).toLocaleString() }, relativeDate(note.updatedAt)), actions));
+}
+
