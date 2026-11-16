@@ -152,3 +152,35 @@ function renderColors() {
   $('#note-colors').replaceChildren(...COLORS.map(color => el('button', { type: 'button', class: `color-option${state.color === color ? ' selected' : ''}`, 'data-color': color, 'aria-label': `${color} note`, 'aria-pressed': String(state.color === color), title: color, onclick: () => { state.color = color; renderColors(); queueDraft(); } }, state.color === color ? '✓' : '')));
 }
 
+// section: editor lifecycle
+function openEditor(note = null) {
+  if (state.readonly) { toast('Storage recovery is required. Open Settings to download the original data.'); return; }
+  state.editing = note?.id || null;
+  const draft = loadDraft();
+  const reusable = draft && draft.id === state.editing && typeof draft.title === 'string' && typeof draft.body === 'string';
+  setEditor(reusable ? draft : note || {});
+  $('#editor-heading').textContent = note ? 'Edit your note' : 'Capture a thought';
+  $('#draft-status').textContent = reusable ? 'Recovered your unsaved draft.' : 'Changes stay in a draft until you save.';
+  initialEditorValue = JSON.stringify(editorValue());
+  $('#editor').showModal(); $('#note-title').focus();
+}
+function queueDraft() {
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(flushDraft, 250);
+}
+function flushDraft() {
+  clearTimeout(draftTimer);
+  if (!$('#editor').open) return;
+  if (JSON.stringify(editorValue()) === initialEditorValue) return;
+  try { saveDraft(editorValue()); $('#draft-status').textContent = 'Draft saved on this device.'; }
+  catch { $('#draft-status').textContent = 'Draft could not save. Keep this window open and export if needed.'; }
+}
+function saveEditor(event) {
+  event?.preventDefault(); clearTimeout(draftTimer);
+  const data = editorValue();
+  if (!data.title.trim() && !data.body.trim()) { toast('Add a title or a thought first.'); $('#note-title').focus(); return; }
+  const fields = { title: data.title.trim(), body: data.body, tags: parseTags(data.tags), color: data.color, pinned: data.pinned, checklist: data.checklist };
+  const saved = state.editing ? updateNote(state.editing, fields) : persist([...state.notes, makeNote(fields)]);
+  if (saved) { try { saveDraft(null); } catch {} initialEditorValue = JSON.stringify(editorValue()); $('#editor').close(); toast('Note saved.'); }
+}
+
