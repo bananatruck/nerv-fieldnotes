@@ -203,3 +203,9 @@ fieldset.field legend { margin-bottom: 10px; }
 .inbox-item p { white-space: pre-wrap; overflow-wrap: anywhere; }
 .inbox-item small { font: 10px var(--mono); color: var(--muted); }
 
+/* section: notifications */
+.toast { position: fixed; bottom: 25px; right: 25px; max-width: min(440px, calc(100vw - 32px)); z-index: 100; background: #dbe5b9; color: #222b17; border: 1px solid #9bb271; box-shadow: 4px 4px 0 #0006; padding: 14px 18px; display: flex; align-items: center; gap: 15px; font-size: 12px; }
+.toast:empty { display: none; }
+.toast button { color: #243713; text-decoration: underline; background: transparent; border: 0; font-weight: 700; padding: 4px; }
+.toast.error { background: #e8b4a3; color: #4f211b; border-color: #bd7058; }
+
