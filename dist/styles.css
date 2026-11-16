@@ -287,3 +287,20 @@ fieldset.field legend { margin-bottom: 10px; }
   .view-list .note-bottom { flex-direction: row; align-items: center; margin-top: 14px; }
 }
 
+/* section: print and motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media print {
+  :root { color-scheme: light; }
+  body, .main { background: white; color: black; }
+  .app-shell { display: block; }
+  .sidebar, .toolbar, .topbar, .statusbar, .note-tools, .note-actions, .toast, .hero-meta { display: none !important; }
+  .main { padding: 0; }
+  .hero { padding-top: 0; }
+  h1 { color: black; font-size: 48px; }
+  .note-grid { grid-template-columns: 1fr 1fr; }
+  .note { break-inside: avoid; box-shadow: none; border: 1px solid #888; }
+  .note-preview { display: block; }
+}
+
