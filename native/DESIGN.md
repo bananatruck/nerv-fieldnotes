@@ -56,4 +56,7 @@ A representative native GTK window was rendered to a PNG and visually inspected.
 The board preview included the sidebar, search toolbar, three paper cards, and checklist controls.
 A separate 390-by-500-pixel native sticky preview was rendered and inspected with its options collapsed.
 The title, body, forwarding action, save status, and save-and-close action fit inside the window.
-Application interaction and full-window layout checks belong to the native app verification report.
+The integrated Rust app screenshots were also inspected at a 370-by-340-pixel sticky size and a full-board size.
+The compact editor fits its visible controls and keeps note text readable.
+The board keeps the warm-paper cards distinct from navigation and search.
+Application interaction checks belong to the native app verification report.

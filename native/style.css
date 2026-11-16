@@ -661,3 +661,20 @@ window.sticky-window .sticky-options > title:focus-visible {
   outline: 2px solid #7c8e5d;
   outline-offset: 2px;
 }
+/* Categories stay plain; the date and actions share one footer divider. */
+window.fieldnotes .note-card > box:first-child .note-meta {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: #656a4e;
+}
+window.fieldnotes .note-card > .note-actions {
+  border-top: 1px solid alpha(#5b6644, 0.22);
+  padding-top: 9px;
+  margin-top: 7px;
+}
+window.fieldnotes .note-card > .note-actions .note-meta {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
