@@ -116,3 +116,25 @@ function render() {
   }
 }
 
+// section: moving and undo
+function move(note, status) {
+  const previous = note.status;
+  if (updateNote(note.id, { status })) {
+    state.undo = { id: note.id, status: previous };
+    toast(status === 'deleted' ? 'Note moved to trash.' : status === 'archived' ? 'Note archived.' : 'Note restored.', { label: 'Undo', run: undoMove });
+  }
+}
+function undoMove() {
+  if (!state.undo) return;
+  const { id, status } = state.undo;
+  if (updateNote(id, { status })) { state.undo = null; toast('Move undone.'); }
+}
+function duplicate(note) {
+  if (persist([...state.notes, makeNote({ title: `${note.title || 'Untitled'} (copy)`, body: note.body, tags: [...note.tags], color: note.color, checklist: note.checklist })])) toast('Note duplicated.');
+}
+async function deleteForever(note) {
+  const dialog = $('#confirm'); dialog.returnValue = ''; dialog.showModal();
+  await new Promise(resolve => dialog.addEventListener('close', resolve, { once: true }));
+  if (dialog.returnValue === 'delete' && persist(state.notes.filter(n => n.id !== note.id))) { state.undo = null; toast('Note permanently deleted.'); }
+}
+
