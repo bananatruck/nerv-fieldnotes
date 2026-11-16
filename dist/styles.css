@@ -142,3 +142,12 @@ kbd { font-family: var(--mono); }
 .note-actions svg { width: 14px; height: 14px; }
 .note .danger { color: #813c2d; }
 
+/* section: list layout */
+.view-list .note-grid { grid-template-columns: 1fr; gap: 12px; }
+.view-list .note { min-height: 0; display: grid; grid-template-columns: minmax(160px, .75fr) minmax(160px, 1.5fr) auto; column-gap: 25px; align-items: center; padding: 14px 20px; }
+.view-list .note-top { margin: 0 0 7px; grid-column: 1; }
+.view-list .note-title { grid-column: 1; font-size: 17px; }
+.view-list .note-preview { grid-column: 2; grid-row: 1 / span 3; margin: 0; -webkit-line-clamp: 3; }
+.view-list .note-tags { grid-column: 1; margin: 9px 0 0; }
+.view-list .note-bottom { grid-column: 3; grid-row: 1 / span 3; flex-direction: column; border: 0; padding: 0; align-items: flex-end; }
+
