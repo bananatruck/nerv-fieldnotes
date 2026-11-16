@@ -194,3 +194,10 @@ async function openForward(note) {
   $('#inbox-status').textContent = state.local ? 'Local inbox connected. Send a durable handoff to your agent queue.' : 'Local inbox is available in the installed app at http://127.0.0.1:4783. Copy and download work here.';
 }
 
+// section: handoff copy and download
+async function copyHandoff() {
+  try { await navigator.clipboard.writeText(handoffText()); toast('Handoff copied. Paste it into your agent session.'); }
+  catch { $('#handoff-preview').focus(); $('#handoff-preview').select(); toast('Clipboard unavailable. The handoff is selected. Press Ctrl+C.'); }
+}
+function downloadHandoff() { download(`${filename(state.forwarding.title)}.md`, handoffText(), 'text/markdown'); toast('Markdown handoff downloaded.'); }
+
