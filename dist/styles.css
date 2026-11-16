@@ -72,3 +72,14 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round
 .system-status::before, .status-dot { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 8px #bdcf8230; }
 .mobile-nav-toggle { display: none; }
 
+/* section: hero typography */
+.hero { display: grid; grid-template-columns: 1fr auto; position: relative; align-items: end; padding: 43px 0 32px; }
+.eyebrow { grid-column: 1 / -1; color: var(--orange); font: 10px/1.5 var(--mono); letter-spacing: 2px; text-transform: uppercase; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); }
+h1 { margin: 0; font-family: var(--display); font-size: clamp(52px, 6.8vw, 99px); line-height: .92; font-weight: 900; letter-spacing: -4px; color: var(--amber); text-transform: uppercase; }
+h1 span { color: var(--text); }
+.hero-description { margin: 18px 0 0; font-size: 13px; color: var(--muted); max-width: 520px; }
+.hero-meta { text-align: right; color: #858c74; font: 9px/1.9 var(--mono); letter-spacing: 1px; text-transform: uppercase; padding-left: 20px; }
+.hero-meta strong { display: block; color: var(--amber); font-size: 33px; line-height: 1.2; font-weight: 400; letter-spacing: -1.5px; }
+.hero > div:first-child { min-width: 0; }
+
