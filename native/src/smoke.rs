@@ -85,6 +85,14 @@ pub fn schedule(ui: Rc<Ui>) {
                     .cloned()
                     .ok_or("No sticky for screenshot")?;
                 ui::screenshot(&editor.window, &directory.join("native-sticky.png"))?;
+                check(
+                    editor.body.width() >= editor.window.width() - 16,
+                    "writing canvas uses the sticky width with at most 8px per side",
+                )?;
+                check(
+                    editor.body.height() >= editor.window.height() - 52,
+                    "header and all vertical chrome use at most 52px",
+                )?;
                 check(true, "actual GTK board and sticky render to screenshots")?;
                 Ok(())
             })();
@@ -241,8 +249,16 @@ fn exercise(ui: &Rc<Ui>) -> Result<(), String> {
         "reopening shows the most recent sticky",
     )?;
     check(
-        current.window.default_width() == 370 && current.window.default_height() == 340,
+        current.window.default_width() == 320 && current.window.default_height() == 200,
         "sticky opens at compact desktop dimensions",
+    )?;
+    check(
+        !current.title.is_mapped() && !current.details.is_expanded(),
+        "title and note details stay off the writing canvas",
+    )?;
+    check(
+        current.menu.popover().is_some(),
+        "metadata and Save remain available in the dots menu",
     )?;
     ui.refresh();
     Ok(())

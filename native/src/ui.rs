@@ -32,6 +32,8 @@ pub struct Editor {
     pub save: gtk::Button,
     pub board: gtk::Button,
     pub forward: gtk::Button,
+    pub menu: gtk::MenuButton,
+    pub details: gtk::Expander,
     pub note: RefCell<Note>,
     status: gtk::Label,
     timer: RefCell<Option<glib::SourceId>>,
@@ -86,21 +88,19 @@ impl Ui {
         }
         let window = gtk::ApplicationWindow::builder()
             .title("NERV Fieldnotes · All notes")
-            .default_width(1220)
-            .default_height(780)
+            .default_width(1000)
+            .default_height(640)
             .build();
         window.add_css_class("fieldnotes");
         let header = gtk::HeaderBar::new();
-        header.set_title_widget(Some(&text("NERV / PERSONAL OPERATIONS", "section-label")));
+        header.set_title_widget(Some(&text("Fieldnotes", "window-caption")));
         window.set_titlebar(Some(&header));
         let root = hbox(0);
         window.set_child(Some(&root));
-        let sidebar = vbox(14);
+        let sidebar = vbox(5);
         sidebar.add_css_class("sidebar");
-        sidebar.set_width_request(200);
+        sidebar.set_width_request(155);
         sidebar.append(&text("NERV\nFIELDNOTES", "brand"));
-        sidebar.append(&text("NATIVE MEMORY SYSTEM", "brand-subtitle"));
-        sidebar.append(&text("WORKSPACE / 01", "section-label"));
         let mut nav = Vec::new();
         for (view, label) in [
             (View::All, "All notes"),
@@ -118,7 +118,7 @@ impl Ui {
         let spacer = vbox(0);
         spacer.set_vexpand(true);
         sidebar.append(&spacer);
-        sidebar.append(&text("RUST + GTK4\nSAVED ON THIS DEVICE", "sidebar-footer"));
+        sidebar.append(&text("Saved locally", "sidebar-footer"));
         let import = button("Import backup", "");
         let export = button("Export backup", "");
         let help = button("Keyboard shortcuts", "");
@@ -126,13 +126,11 @@ impl Ui {
         sidebar.append(&export);
         sidebar.append(&help);
         root.append(&sidebar);
-        let workspace = vbox(16);
+        let workspace = vbox(10);
         workspace.add_css_class("workspace");
         workspace.set_hexpand(true);
         root.append(&workspace);
-        workspace.append(&text("EXTERNAL MEMORY / PERSONAL OPERATIONS", "topline"));
-        workspace.append(&text("FIELDNOTES", "hero-title"));
-        workspace.append(&text("Clear your head. Leave a note.", "hero-subtitle"));
+        workspace.append(&text("Notes", "hero-title"));
         let toolbar = hbox(10);
         toolbar.add_css_class("toolbar");
         let search = gtk::SearchEntry::new();
@@ -148,8 +146,8 @@ impl Ui {
         flow.set_selection_mode(gtk::SelectionMode::None);
         flow.set_min_children_per_line(1);
         flow.set_max_children_per_line(3);
-        flow.set_column_spacing(16);
-        flow.set_row_spacing(16);
+        flow.set_column_spacing(10);
+        flow.set_row_spacing(10);
         flow.set_valign(gtk::Align::Start);
         flow.set_homogeneous(true);
         let scroll = gtk::ScrolledWindow::builder()
@@ -345,17 +343,13 @@ impl Ui {
         }
     }
     fn card(self: &Rc<Self>, note: Note) -> gtk::Box {
-        let card = vbox(12);
+        let card = vbox(7);
         card.add_css_class("note-card");
         card.add_css_class(note.color.as_str());
-        card.set_width_request(250);
+        card.set_width_request(210);
         let top = hbox(8);
         let category = text(
-            if note.checklist {
-                "CHECKLIST"
-            } else {
-                "FIELD NOTE"
-            },
+            if note.checklist { "Checklist" } else { "Note" },
             "note-meta",
         );
         category.set_hexpand(true);
@@ -897,15 +891,15 @@ impl Editor {
             } else {
                 &note.title
             })
-            .default_width(370)
-            .default_height(340)
+            .default_width(320)
+            .default_height(200)
             .build();
         if let Ok(Some(value)) = ui.store.get_setting(&format!("note-size:{}", note.id))
             && let Some((w, h)) = value
                 .split_once(',')
                 .and_then(|(w, h)| Some((w.parse::<i32>().ok()?, h.parse::<i32>().ok()?)))
-            && (260..=1600).contains(&w)
-            && (220..=1400).contains(&h)
+            && (240..=1600).contains(&w)
+            && (140..=1400).contains(&h)
         {
             window.set_default_size(w, h);
         }
@@ -913,7 +907,7 @@ impl Editor {
         window.add_css_class(note.color.as_str());
         let header = gtk::HeaderBar::new();
         header.set_decoration_layout(Some(":close"));
-        header.set_title_widget(Some(&text("FIELD NOTE", "section-label")));
+        header.set_title_widget(Some(&text("", "sticky-caption")));
         let new = button("+", "");
         new.set_tooltip_text(Some("New sticky note · Ctrl+N"));
         header.pack_start(&new);
@@ -938,37 +932,37 @@ impl Editor {
         menu_box.append(&trash);
         popover.set_child(Some(&menu_box));
         menu.set_popover(Some(&popover));
-        let root = vbox(6);
+        let root = vbox(0);
         root.add_css_class("sticky-content");
-        root.add_css_class("editor");
-        margins(&root, 10);
+        margins(&root, 6);
         window.set_child(Some(&root));
         let title = gtk::Entry::builder()
-            .placeholder_text("Untitled")
+            .placeholder_text("Title, optional")
             .text(&note.title)
             .max_length(500)
             .build();
         title.add_css_class("sticky-title");
-        root.append(&title);
         let body = gtk::TextView::new();
         body.set_wrap_mode(gtk::WrapMode::WordChar);
         body.add_css_class("sticky-body");
+        body.update_property(&[gtk::accessible::Property::Label("Note text")]);
         body.buffer().set_text(&note.body);
-        body.set_top_margin(4);
-        body.set_bottom_margin(4);
+        body.set_top_margin(0);
+        body.set_bottom_margin(0);
         let scroll = gtk::ScrolledWindow::builder()
             .hscrollbar_policy(gtk::PolicyType::Never)
             .vexpand(true)
-            .min_content_height(90)
+            .min_content_height(64)
             .child(&body)
             .build();
         root.append(&scroll);
         let expander = gtk::Expander::builder()
-            .label("Note options")
+            .label("Note details")
             .expanded(false)
             .build();
         expander.add_css_class("sticky-options");
-        let fields = vbox(8);
+        let fields = vbox(6);
+        fields.append(&title);
         let tags = gtk::Entry::builder()
             .placeholder_text("Tags, separated by commas")
             .text(note.tags.join(", "))
@@ -993,16 +987,14 @@ impl Editor {
         row.append(&checklist);
         fields.append(&row);
         expander.set_child(Some(&fields));
-        root.append(&expander);
-        let footer = hbox(8);
-        let status = text("Saved on this device", "sticky-status");
-        status.set_hexpand(true);
+        menu_box.append(&expander);
+        let status = text("", "sticky-status");
         status.set_wrap(true);
-        let save = button("Done", "");
+        status.set_visible(false);
+        let save = button("Save and close", "");
         save.set_tooltip_text(Some("Save and close · Ctrl+Enter"));
-        footer.append(&status);
-        footer.append(&save);
-        root.append(&footer);
+        menu_box.append(&save);
+        root.append(&status);
         let persisted = ui
             .store
             .load_notes()
@@ -1018,6 +1010,8 @@ impl Editor {
             save,
             board,
             forward,
+            menu,
+            details: expander.clone(),
             note: RefCell::new(note),
             status,
             timer: RefCell::new(None),
@@ -1067,11 +1061,7 @@ impl Editor {
         }
         {
             let ex = expander.downgrade();
-            let p = popover.downgrade();
             options.connect_clicked(move |_| {
-                if let Some(p) = p.upgrade() {
-                    p.popdown();
-                }
                 if let Some(ex) = ex.upgrade() {
                     ex.set_expanded(!ex.is_expanded());
                 }
@@ -1163,6 +1153,7 @@ impl Editor {
                     &format!("note-size:{}", e.note.borrow().id),
                     &format!("{},{}", e.window.width(), e.window.height()),
                 ) {
+                    e.status.set_visible(true);
                     e.status.set_text(&error);
                     return glib::Propagation::Stop;
                 }
@@ -1251,6 +1242,7 @@ impl Editor {
         if let Some(timer) = self.timer.borrow_mut().take() {
             timer.remove();
         }
+        self.status.set_visible(false);
         self.status.set_text("Saving…");
         let e = self.clone();
         let timer =
@@ -1272,6 +1264,7 @@ impl Editor {
             return match self.ui.store.delete_draft(&note.id) {
                 Ok(()) => true,
                 Err(e) => {
+                    self.status.set_visible(true);
                     self.status.set_text(&e);
                     false
                 }
@@ -1297,10 +1290,12 @@ impl Editor {
                 self.dirty.set(false);
                 self.persisted.set(true);
                 self.status.set_text("Saved");
+                self.status.set_visible(false);
                 self.ui.refresh();
                 true
             }
             Err(e) => {
+                self.status.set_visible(true);
                 self.status.set_text(&format!("Not saved: {e}"));
                 false
             }
