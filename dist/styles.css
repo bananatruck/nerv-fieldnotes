@@ -333,3 +333,28 @@ code { overflow-wrap: anywhere; font-size: .9em; color: var(--lime); }
 @media (max-width: 900px) { .brand-name { font-size: 16px; } .brand-name small { font-size: 6px; } }
 @media (max-width: 640px) { h1 { font-size: clamp(43px, 11vw, 66px); letter-spacing: -2px; } .brand-name { font-size: 20px; } }
 
+/* section: day shift theme */
+body[data-theme='light'] { color-scheme: light; --canvas: #e7e7d9; --sidebar: #dedfd0; --panel: #f2f1e6; --line: #bbbeaa; --line-soft: #cdd0bd; --text: #272e20; --muted: #626c51; --amber: #975118; --orange: #a74623; --lime: #526a29; }
+body[data-theme='light'] .main { background-image: linear-gradient(#00000004 1px, transparent 1px), linear-gradient(90deg, #00000004 1px, transparent 1px); }
+body[data-theme='light'] .brand-mark { background: #a74623; color: #f2e8cf; }
+body[data-theme='light'] .nav-link { color: #586348; }
+body[data-theme='light'] .nav-link.active { color: #783a12; border-color: #b48e55; background: #d6c49b; box-shadow: inset 3px 0 #975118; }
+body[data-theme='light'] .nav-link:hover { background: #cdd1ba; color: #27321c; }
+body[data-theme='light'] .nav-label, body[data-theme='light'] .breadcrumb, body[data-theme='light'] .hero-meta, body[data-theme='light'] .section-heading, body[data-theme='light'] .statusbar { color: #626e50; }
+body[data-theme='light'] .search-wrap { background: #f1f2e6; color: #526043; }
+body[data-theme='light'] .search-wrap input::placeholder { color: #68715a; }
+body[data-theme='light'] .button-primary { background: #a25620; border-color: #a25620; color: #fff4db; }
+body[data-theme='light'] .button-primary:hover { background: #834316; }
+body[data-theme='light'] .button:hover { background: #cdd1bc; }
+body[data-theme='light'] .button-primary:hover { background: #834316; }
+body[data-theme='light'] .dialog { background: #e7e8d9; border-color: #88946e; }
+body[data-theme='light'] .dialog-footer { background: #dce0cc; }
+body[data-theme='light'] .dialog p, body[data-theme='light'] .field, body[data-theme='light'] .checkbox-field, body[data-theme='light'] .color-field legend, body[data-theme='light'] .field-hint { color: #536143; }
+body[data-theme='light'] .field input, body[data-theme='light'] .field textarea, body[data-theme='light'] .field select { background: #f7f7ef; border-color: #aab397; color: #27321e; }
+body[data-theme='light'] .dialog kbd { background: #d8ddc6; color: #344325; border-color: #a0ac8b; }
+body[data-theme='light'] .sidebar-footer p, body[data-theme='light'] .sidebar-serial { color: #59684a; }
+body[data-theme='light'] .inbox-item { background: #f0f1e4; }
+body[data-theme='light'] .view-switch button.active, body[data-theme='light'] .view-switch button[aria-pressed='true'] { background: #cfd4bb; }
+body[data-theme='light'] .toast { background: #344125; color: #ecf0dd; }
+body[data-theme='light'] .toast button { color: #e7f1d0; }
+
