@@ -5,3 +5,7 @@ __pycache__/
 .openai/*.tar.gz
 .openai/source-state.json
 artifacts/
+
+/target/
+/native/target/
+*.core

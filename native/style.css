@@ -1,0 +1,663 @@
+/* Native GTK4 theme. Layout belongs to GtkBox, GtkFlowBox, and GtkScrolledWindow. */
+@define-color nf_bg #101510;
+@define-color nf_panel #171d16;
+@define-color nf_line #353d2b;
+@define-color nf_text #e4e5cf;
+@define-color nf_muted #a8b095;
+@define-color nf_amber #e9ac3e;
+@define-color nf_orange #ed793b;
+@define-color nf_lime #c0d27c;
+@define-color nf_ink #242c20;
+
+/* Shell and ordinary native controls */
+window.fieldnotes,
+window.editor {
+  color: @nf_text;
+  background-color: @nf_bg;
+  font-family: "Adwaita Sans", "Noto Sans", sans-serif;
+  font-size: 13px;
+}
+window.fieldnotes headerbar,
+window.editor headerbar {
+  color: @nf_muted;
+  background: @nf_panel;
+  border-bottom: 1px solid @nf_line;
+  box-shadow: none;
+}
+window.fieldnotes headerbar .title,
+window.editor headerbar .title {
+  color: @nf_text;
+  font-size: 12px;
+  font-weight: 600;
+}
+window.fieldnotes separator,
+window.editor separator {
+  background: @nf_line;
+  min-height: 1px;
+  min-width: 1px;
+}
+window.fieldnotes button,
+window.editor button {
+  color: @nf_text;
+  background: #1b2219;
+  border: 1px solid #414a33;
+  border-radius: 3px;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 8px 12px;
+  min-height: 20px;
+  font-weight: 500;
+}
+window.fieldnotes button:hover,
+window.editor button:hover {
+  color: #f1f0db;
+  background: #2b3323;
+  border-color: #626e48;
+}
+window.fieldnotes button:active,
+window.editor button:active {
+  background: #38402c;
+}
+window.fieldnotes button:disabled,
+window.editor button:disabled {
+  color: #737b66;
+  background: #1a1e17;
+  border-color: #303729;
+}
+window.fieldnotes button:focus-visible,
+window.editor button:focus-visible,
+window.fieldnotes entry:focus-within,
+window.editor entry:focus-within,
+window.editor textview:focus-within {
+  outline: 2px solid @nf_lime;
+  outline-offset: 2px;
+}
+window.fieldnotes button.primary,
+window.editor button.primary {
+  color: #201d10;
+  background: @nf_amber;
+  border-color: #f5bd5b;
+  font-weight: 700;
+}
+window.fieldnotes button.primary:hover,
+window.editor button.primary:hover {
+  color: #18170d;
+  background: #f2bb58;
+  border-color: #f6ce7c;
+}
+window.fieldnotes button.danger,
+window.editor button.danger {
+  color: #ffc6ae;
+  background: #48281f;
+  border-color: #9b513a;
+}
+window.fieldnotes button.danger:hover,
+window.editor button.danger:hover {
+  background: #693425;
+}
+window.fieldnotes button.flat,
+window.editor button.flat {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Left navigation */
+.sidebar {
+  color: @nf_muted;
+  background: @nf_panel;
+  border-right: 1px solid @nf_line;
+  padding: 25px 17px 20px;
+}
+.brand {
+  color: #efeed9;
+  font-family: "Nimbus Sans Narrow", "Adwaita Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+.brand-subtitle {
+  color: @nf_orange;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  margin-top: 6px;
+  margin-bottom: 28px;
+}
+.section-label {
+  color: #929d7c;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  margin-top: 15px;
+  margin-bottom: 11px;
+}
+window.fieldnotes .nav-button {
+  color: #b8c0a4;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 400;
+}
+window.fieldnotes .nav-button:hover {
+  color: #e0e5cb;
+  background: #252d20;
+}
+window.fieldnotes .nav-button.selected {
+  color: #f0b950;
+  background: #3b3020;
+  border-color: #8b6530;
+  border-left: 3px solid @nf_amber;
+}
+.sidebar-footer {
+  color: #929e7c;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  line-height: 1.6;
+  border-top: 1px solid @nf_line;
+  padding-top: 18px;
+}
+
+/* Main workspace */
+.workspace {
+  padding: 26px 32px 18px;
+  background-color: @nf_bg;
+}
+.topline {
+  color: #a8b48c;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  border-bottom: 1px solid @nf_line;
+  padding-bottom: 18px;
+}
+.hero-title {
+  color: @nf_amber;
+  font-family: "Nimbus Sans Narrow", "Adwaita Sans", sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.hero-subtitle {
+  color: #aeb89b;
+  font-size: 13px;
+  margin-top: 3px;
+  margin-bottom: 20px;
+}
+.toolbar {
+  border-top: 1px solid @nf_line;
+  border-bottom: 1px solid @nf_line;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 10px;
+}
+.status {
+  color: #aabc81;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 10px;
+  padding-top: 15px;
+  border-top: 1px solid @nf_line;
+}
+.empty-title {
+  color: @nf_amber;
+  font-family: "Nimbus Sans Narrow", "Adwaita Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+flowbox {
+  padding: 8px 0 22px;
+  background: transparent;
+}
+flowboxchild {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+flowboxchild:selected {
+  outline: 1px solid @nf_lime;
+  outline-offset: 2px;
+  background: transparent;
+}
+
+/* Sticky note paper */
+.note-card,
+.inbox-card {
+  color: @nf_ink;
+  background: #e8e4ce;
+  border: 1px solid #dad5bd;
+  border-top: 3px solid #df7e43;
+  border-radius: 1px;
+  padding: 18px 18px 12px;
+  min-width: 230px;
+  min-height: 205px;
+  box-shadow: 0 3px 0 #090d09;
+}
+.note-card.paper { background: #e8e4ce; border-color: #d9d6bb; border-top-color: #e38249; }
+.note-card.amber { background: #ebc985; border-color: #d5b46d; border-top-color: #bd7d32; }
+.note-card.red { background: #dfaa96; border-color: #cc9582; border-top-color: #a24e37; }
+.note-card.green { background: #c6d0aa; border-color: #afb996; border-top-color: #82935d; }
+.note-card.purple { background: #cbc0d8; border-color: #b6a9c5; border-top-color: #8a719c; }
+.note-card label,
+.inbox-card label {
+  color: @nf_ink;
+}
+.note-card .section-label,
+.inbox-card .section-label {
+  color: #656a4e;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin: 0;
+}
+window.fieldnotes .note-card .note-title {
+  color: #22291e;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  min-height: 0;
+}
+.note-title label {
+  color: #22291e;
+  font-size: 19px;
+  font-weight: 700;
+}
+window.fieldnotes .note-card .note-title:hover {
+  color: #10170d;
+  background: transparent;
+  text-decoration: underline;
+}
+.note-preview {
+  color: #4b5341;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.note-tag {
+  color: #5c634c;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  background: alpha(#5b6644, 0.07);
+  border: 1px solid alpha(#5b6644, 0.24);
+  border-radius: 2px;
+  padding: 3px 5px;
+}
+.note-meta {
+  color: #687052;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  border-top: 1px solid alpha(#5b6644, 0.22);
+  padding-top: 9px;
+  margin-top: 7px;
+}
+.note-meta label {
+  color: #687052;
+}
+window.fieldnotes .note-actions button,
+window.fieldnotes .note-card .pin-button {
+  color: #435033;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  min-width: 18px;
+  min-height: 18px;
+  padding: 3px 5px;
+  font-size: 13px;
+}
+window.fieldnotes .note-actions button:hover,
+window.fieldnotes .note-card .pin-button:hover {
+  color: #17210d;
+  background: alpha(#52633b, 0.13);
+  border-color: alpha(#52633b, 0.25);
+}
+window.fieldnotes .note-card .pin-button.pinned {
+  color: #813c1d;
+  background: alpha(#b56b35, 0.13);
+}
+.note-card checkbutton {
+  color: #404b32;
+  font-size: 12px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.note-card checkbutton check {
+  color: #f5f4dc;
+  background: alpha(#485935, 0.1);
+  border: 1px solid #758064;
+  border-radius: 2px;
+  min-width: 13px;
+  min-height: 13px;
+}
+.note-card checkbutton check:checked {
+  color: #f6f4dc;
+  background: #566c3e;
+  border-color: #566c3e;
+}
+
+/* Native editor and handoff dialogs */
+.editor {
+  color: @nf_text;
+  background: @nf_bg;
+  padding: 22px;
+}
+.field-label {
+  color: #bcc5a6;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+window.fieldnotes entry,
+window.editor entry,
+window.fieldnotes searchentry,
+window.editor searchentry,
+window.fieldnotes dropdown > button,
+window.editor dropdown > button {
+  color: @nf_text;
+  background: #1a2118;
+  border: 1px solid #465137;
+  border-radius: 2px;
+  box-shadow: none;
+  padding: 9px 10px;
+  min-height: 21px;
+  caret-color: @nf_amber;
+}
+window.fieldnotes entry selection,
+window.editor entry selection,
+window.editor textview text selection {
+  color: #171d13;
+  background: @nf_amber;
+}
+window.editor textview,
+window.editor textview text {
+  color: #e3e5ce;
+  background: #1a2118;
+  font-size: 14px;
+  line-height: 1.5;
+  caret-color: @nf_amber;
+}
+window.editor textview {
+  border: 1px solid #465137;
+  border-radius: 2px;
+  padding: 12px;
+}
+window.fieldnotes checkbutton,
+window.editor checkbutton {
+  color: #bec7aa;
+}
+window.fieldnotes checkbutton check:checked,
+window.editor checkbutton check:checked {
+  color: #1a2114;
+  background: @nf_lime;
+  border-color: #d0e297;
+}
+window.editor .status {
+  font-size: 10px;
+  border-top: 0;
+  padding-top: 4px;
+}
+window.fieldnotes popover contents,
+window.editor popover contents {
+  color: @nf_text;
+  background: #20281c;
+  border: 1px solid #4c593a;
+}
+window.fieldnotes scrollbar slider,
+window.editor scrollbar slider {
+  min-width: 5px;
+  min-height: 5px;
+  background: #535f41;
+  border-radius: 3px;
+}
+/* Paper checklist controls override the dark editor controls above. */
+window.fieldnotes .note-card checkbutton {
+  color: #404b32;
+}
+window.fieldnotes .note-card checkbutton label {
+  color: #404b32;
+}
+window.fieldnotes .note-card checkbutton check:checked {
+  color: #f6f4dc;
+  background: #566c3e;
+  border-color: #566c3e;
+}
+/* Keep GTK's window controls compact and the toolbar free of theme chrome. */
+window.fieldnotes headerbar button,
+window.editor headerbar button {
+  background: transparent;
+  border-color: transparent;
+  padding: 3px;
+  min-width: 24px;
+  min-height: 24px;
+}
+window.fieldnotes headerbar button:hover,
+window.editor headerbar button:hover {
+  background: #2b3323;
+  border-color: #4c593a;
+}
+.toolbar {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* The default window is one editable sticky, with the full board behind the dots menu. */
+window.sticky-window {
+  color: #283120;
+  background: #e8e4ce;
+  font-family: "Adwaita Sans", "Noto Sans", sans-serif;
+  font-size: 13px;
+}
+window.sticky-window.paper { background: #e8e4ce; }
+window.sticky-window.amber { background: #ebc985; }
+window.sticky-window.red { background: #dfaa96; }
+window.sticky-window.green { background: #c6d0aa; }
+window.sticky-window.purple { background: #cbc0d8; }
+window.sticky-window headerbar {
+  color: #4b553c;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid alpha(#475737, 0.18);
+  box-shadow: none;
+  min-height: 35px;
+}
+window.sticky-window headerbar label,
+window.sticky-window headerbar .title {
+  color: #596347;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+  margin: 0;
+}
+window.sticky-window headerbar button {
+  color: #3c4a2c;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  border-radius: 3px;
+  padding: 3px;
+  min-width: 24px;
+  min-height: 24px;
+}
+window.sticky-window headerbar button:hover {
+  color: #1c2912;
+  background: alpha(#455737, 0.1);
+  border-color: alpha(#455737, 0.16);
+}
+window.sticky-window .sticky-content,
+window.sticky-window .editor {
+  color: #283120;
+  background: transparent;
+  padding: 16px 20px 14px;
+}
+window.sticky-window label {
+  color: #46523a;
+}
+window.sticky-window entry,
+window.sticky-window dropdown > button {
+  color: #283120;
+  background: alpha(#4c5c3e, 0.045);
+  border: 1px solid alpha(#4c5c3e, 0.25);
+  border-radius: 3px;
+  box-shadow: none;
+  padding: 7px 8px;
+  min-height: 20px;
+  caret-color: #283120;
+}
+window.sticky-window entry.sticky-title {
+  color: #283120;
+  background: transparent;
+  border: 0;
+  padding: 2px 0 10px;
+  box-shadow: none;
+  min-height: 26px;
+  font-size: 23px;
+  font-weight: 700;
+  caret-color: #283120;
+}
+window.sticky-window textview.sticky-body,
+window.sticky-window textview.sticky-body text {
+  color: #35402c;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  caret-color: #283120;
+}
+window.sticky-window entry selection,
+window.sticky-window textview text selection {
+  color: #f5f1da;
+  background: #52683a;
+}
+window.sticky-window .sticky-status,
+window.sticky-window .status {
+  color: #677354;
+  font-family: "Adwaita Mono", monospace;
+  font-size: 9px;
+  border: 0;
+  padding: 0;
+}
+window.sticky-window .sticky-options {
+  color: #566346;
+  border-top: 1px solid alpha(#475737, 0.18);
+  margin-top: 8px;
+  padding-top: 10px;
+  font-size: 11px;
+}
+window.sticky-window .sticky-options .field-label {
+  color: #566346;
+  font-size: 10px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+window.sticky-window .sticky-options checkbutton,
+window.sticky-window .sticky-options checkbutton label {
+  color: #46523a;
+  font-size: 11px;
+}
+window.sticky-window checkbutton check {
+  color: #f4f0d8;
+  background: alpha(#485935, 0.08);
+  border: 1px solid #7b8767;
+  border-radius: 2px;
+}
+window.sticky-window checkbutton check:checked {
+  color: #f4f0d8;
+  background: #566c3e;
+  border-color: #566c3e;
+}
+window.sticky-window button {
+  color: #3d4d2e;
+  background: alpha(#455737, 0.04);
+  border: 1px solid alpha(#455737, 0.24);
+  border-radius: 3px;
+  padding: 6px 10px;
+  min-height: 19px;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 11px;
+}
+window.sticky-window button:hover {
+  background: alpha(#455737, 0.11);
+  border-color: alpha(#455737, 0.4);
+}
+window.sticky-window button.primary {
+  color: #f1efd9;
+  background: #36462a;
+  border-color: #36462a;
+  font-weight: 600;
+}
+window.sticky-window button.primary label {
+  color: #f1efd9;
+}
+window.sticky-window button.primary:hover {
+  background: #4a5e38;
+  border-color: #4a5e38;
+}
+window.sticky-window button:disabled {
+  color: #89917c;
+  background: alpha(#455737, 0.025);
+  border-color: alpha(#455737, 0.13);
+}
+window.sticky-window button:focus-visible,
+window.sticky-window entry:focus-within,
+window.sticky-window textview:focus-within {
+  outline: 2px solid #7c8e5d;
+  outline-offset: 2px;
+}
+window.sticky-window entry.sticky-title:focus-within,
+window.sticky-window textview.sticky-body:focus-within {
+  outline: 0;
+}
+window.sticky-window scrollbar slider {
+  min-width: 4px;
+  min-height: 4px;
+  background: alpha(#566a3e, 0.35);
+  border-radius: 3px;
+}
+/* Menus keep their own dark palette when attached to a paper window. */
+window.sticky-window popover,
+window.sticky-window popover contents {
+  color: @nf_text;
+  background: #20281c;
+  border: 1px solid #4c593a;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px alpha(#000000, 0.24);
+}
+window.sticky-window popover label {
+  color: @nf_text;
+  font-family: "Adwaita Sans", "Noto Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+window.sticky-window popover button,
+window.sticky-window popover modelbutton {
+  color: @nf_text;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+window.sticky-window popover button:hover,
+window.sticky-window popover modelbutton:hover {
+  color: #f1f0da;
+  background: #38452c;
+  border-color: #53633d;
+}
+window.sticky-window popover separator {
+  background: #4b5839;
+  min-height: 1px;
+}
+window.sticky-window .sticky-options:focus-visible,
+window.sticky-window .sticky-options > title:focus-visible {
+  outline: 2px solid #7c8e5d;
+  outline-offset: 2px;
+}

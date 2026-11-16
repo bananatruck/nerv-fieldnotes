@@ -1,0 +1,25 @@
+[package]
+name = "nerv-fieldnotes"
+version = "2.0.0"
+edition = "2024"
+description = "Native GTK4 sticky notes and agent handoffs"
+
+[dependencies]
+gtk = { package = "gtk4", version = "0.11.5", features = ["v4_12"] }
+rusqlite = "0.43.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.dev]
+debug = 0
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true
+codegen-units = 1
