@@ -358,3 +358,7 @@ body[data-theme='light'] .view-switch button.active, body[data-theme='light'] .v
 body[data-theme='light'] .toast { background: #344125; color: #ecf0dd; }
 body[data-theme='light'] .toast button { color: #e7f1d0; }
 
+/* section: navigation visibility */
+.icon-button.mobile-nav-toggle { display: none; }
+@media (max-width: 640px) { .icon-button.mobile-nav-toggle { display: inline-grid; } }
+
