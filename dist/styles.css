@@ -374,3 +374,11 @@ body[data-theme='light'] #footer-help, body[data-theme='light'] .statusbar > spa
 .task.checked span { text-decoration: line-through; color: #657253; }
 .task:has(input:disabled) { cursor: default; }
 
+/* section: inbox overview */
+.inbox-intro { grid-column: 1 / -1; padding: 0 0 10px; }
+.inbox-intro h2 { margin: 0 0 8px; font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: -.5px; color: var(--text); }
+.inbox-intro p { max-width: 620px; margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.inbox-title { margin: 0 0 5px; font-size: 20px; line-height: 1.3; letter-spacing: -.4px; overflow-wrap: anywhere; }
+.note.inbox-item { margin: 0; background: var(--note-color); }
+.note.inbox-item > p { margin: 5px 0; color: #515942; font: 10px var(--mono); }
+.note.inbox-item > time { font: 9px var(--mono); color: #626b50; }
