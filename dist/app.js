@@ -264,3 +264,14 @@ async function importBackup(event) {
   finally { event.target.value = ''; }
 }
 
+// section: settings and help dialogs
+function openSettings() {
+  $('#settings-inbox').textContent = state.local ? 'Local inbox connected. Only notes you explicitly forward are queued for agents.' : 'Local inbox not connected. Copy and Markdown downloads remain available.';
+  $('#settings').showModal();
+}
+function closeDialog(dialog) { if (dialog.id === 'editor') flushDraft(); dialog.close(); }
+$$('.close-dialog').forEach(button => button.addEventListener('click', () => closeDialog(button.closest('dialog'))));
+$$('dialog').forEach(dialog => {
+  dialog.addEventListener('cancel', () => { if (dialog.id === 'editor') flushDraft(); });
+});
+
