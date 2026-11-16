@@ -329,3 +329,16 @@ window.addEventListener('storage', event => {
   } catch { toast('Another window wrote unreadable data. Your current notes are still shown.'); }
 });
 
+// section: startup and recovery
+try {
+  const notes = loadNotes();
+  if (notes === null) { state.notes = sampleNotes(); saveNotes(state.notes); }
+  else state.notes = notes;
+} catch {
+  state.readonly = true; $('#save-state').textContent = 'STORAGE NEEDS ATTENTION';
+  $('#recover-storage').classList.remove('hidden');
+  toast('Your stored notes could not be read. Open Settings to download the original data. Nothing has been overwritten.');
+}
+$('#today').textContent = new Date().toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+applySettings(); render(); checkLocal().then(() => { if (state.local) refreshInbox(); });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
