@@ -102,3 +102,17 @@ function noteCard(note) {
     el('div', { class: 'note-bottom' }, el('time', { class: 'note-date', datetime: note.updatedAt, title: new Date(note.updatedAt).toLocaleString() }, relativeDate(note.updatedAt)), actions));
 }
 
+// section: board rendering
+function render() {
+  renderNavigation();
+  if (state.view === 'inbox') { renderInbox(); return; }
+  const notes = filterNotes(state.notes, state);
+  $('#result-count').textContent = `${String(notes.length).padStart(2, '0')} ${notes.length === 1 ? 'NOTE' : 'NOTES'}`;
+  const board = $('#notes'); board.replaceChildren(...notes.map(noteCard));
+  if (!notes.length) {
+    const title = state.query || state.tag ? 'No matching thoughts.' : state.view === 'trash' ? 'Nothing in the trash.' : state.view === 'archive' ? 'A little breathing room.' : state.view === 'pinned' ? 'Keep something close.' : 'Start with one thought.';
+    board.append(el('div', { class: 'empty-state' }, el('span', { class: 'empty-mark', 'aria-hidden': 'true' }, '+'), el('h2', {}, title), el('p', {}, state.query || state.tag ? 'Try another search or clear the filters.' : state.view === 'all' ? 'A reminder, a plan, a half-formed idea. Put it here.' : 'Notes you move here will appear in this view.'),
+      el('button', { class: 'button button-primary', onclick: () => { if (state.query || state.tag) { state.query = ''; state.tag = ''; $('#search').value = ''; render(); } else openEditor(); } }, state.query || state.tag ? 'Clear filters' : 'New note')));
+  }
+}
+
