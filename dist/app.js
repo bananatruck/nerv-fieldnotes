@@ -213,3 +213,17 @@ async function checkLocal() {
   catch { state.local = false; }
 }
 
+// section: durable handoff submission
+let pendingHandoff = null;
+async function sendHandoff() {
+  if (!state.local || !state.forwarding) return;
+  const button = $('#send-handoff'); button.disabled = true;
+  const signature = JSON.stringify([state.forwarding.id, handoffText()]);
+  if (!pendingHandoff || pendingHandoff.signature !== signature) pendingHandoff = { signature, id: uid(), createdAt: new Date().toISOString() };
+  try {
+    await api('/api/inbox', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: pendingHandoff.id, noteId: state.forwarding.id, title: state.forwarding.title || 'Untitled note', body: handoffText(), agent: $('#agent-name').value.trim() || 'Agent', createdAt: pendingHandoff.createdAt }) });
+    pendingHandoff = null; $('#forward').close(); toast('Handoff queued in the local agent inbox.'); await refreshInbox();
+  } catch (error) { toast(`${error.message} Try again, or copy/download the handoff.`); }
+  finally { button.disabled = !state.local; }
+}
+
