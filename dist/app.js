@@ -300,3 +300,13 @@ for (const mode of ['grid', 'list']) $(`#${mode}-view`).addEventListener('click'
 $('#mobile-menu').addEventListener('click', () => { const open = $('.sidebar').classList.toggle('open'); document.body.classList.toggle('nav-open', open); $('#mobile-menu').setAttribute('aria-expanded', String(open)); });
 $('#theme').addEventListener('change', event => { settings.theme = event.target.value; saveSettings(); applySettings(); });
 
+// section: editor and handoff bindings
+$('#editor-form').addEventListener('submit', saveEditor);
+$('#editor-form').addEventListener('input', queueDraft);
+$('#discard-draft').addEventListener('click', () => { clearTimeout(draftTimer); try { saveDraft(null); $('#editor').close(); toast('Draft discarded.'); } catch { toast('Could not discard draft.'); } });
+$('#agent-name').addEventListener('input', refreshHandoff);
+$('#agent-instructions').addEventListener('input', refreshHandoff);
+$('#copy-handoff').addEventListener('click', copyHandoff);
+$('#download-handoff').addEventListener('click', downloadHandoff);
+$('#send-handoff').addEventListener('click', sendHandoff);
+
