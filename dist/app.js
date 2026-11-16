@@ -7,7 +7,12 @@ let toastTimer;
 let draftTimer;
 let initialEditorValue = '';
 let settings = {};
-try { settings = JSON.parse(localStorage.getItem('nerv-fieldnotes.settings') || '{}') || {}; } catch {}
+try {
+  const stored = JSON.parse(localStorage.getItem('nerv-fieldnotes.settings') || '{}');
+  if (stored && typeof stored === 'object' && !Array.isArray(stored)) {
+    settings = { theme: stored.theme === 'light' ? 'light' : 'dark', layout: stored.layout === 'list' ? 'list' : 'grid' };
+  }
+} catch {}
 
 // section: feedback and persistence
 function toast(message, action) {
