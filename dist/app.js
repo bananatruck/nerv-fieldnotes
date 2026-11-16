@@ -275,3 +275,19 @@ $$('dialog').forEach(dialog => {
   dialog.addEventListener('cancel', () => { if (dialog.id === 'editor') flushDraft(); });
 });
 
+// section: keyboard controls
+function keyboard(event) {
+  const typing = /INPUT|TEXTAREA|SELECT/.test(event.target.tagName) || event.target.isContentEditable;
+  const mod = event.ctrlKey || event.metaKey;
+  const dialog = $('dialog[open]');
+  if (mod && event.key === 'Enter' && $('#editor').open) { event.preventDefault(); saveEditor(); return; }
+  if (dialog) return;
+  if (mod && event.key.toLowerCase() === 'n') { event.preventDefault(); openEditor(); }
+  else if (mod && ['k', '/'].includes(event.key.toLowerCase())) { event.preventDefault(); if (state.view === 'inbox') navigate('all'); $('#search').focus(); $('#search').select(); }
+  else if (mod && event.key.toLowerCase() === 'z' && !typing && state.undo) { event.preventDefault(); undoMove(); }
+  else if (event.key === '?' && !typing) { event.preventDefault(); $('#help').showModal(); }
+  else if (event.key === 'Escape') {
+    state.query = ''; state.tag = ''; $('#search').value = ''; $('.sidebar').classList.remove('open'); document.body.classList.remove('nav-open'); render();
+  }
+}
+
