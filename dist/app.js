@@ -28,3 +28,19 @@ function updateNote(id, fields) {
   return persist(state.notes.map(n => n.id === id ? { ...n, ...fields, updatedAt: new Date().toISOString() } : n));
 }
 
+// section: settings persistence
+function saveSettings() {
+  try { localStorage.setItem('nerv-fieldnotes.settings', JSON.stringify(settings)); }
+  catch { toast('Could not save preferences.'); }
+}
+function applySettings() {
+  document.body.dataset.theme = settings.theme === 'light' ? 'light' : 'dark';
+  document.body.classList.toggle('view-list', settings.layout === 'list');
+  $('#theme').value = document.body.dataset.theme;
+  for (const mode of ['grid', 'list']) {
+    const active = (settings.layout || 'grid') === mode;
+    $(`#${mode}-view`).classList.toggle('active', active);
+    $(`#${mode}-view`).setAttribute('aria-pressed', String(active));
+  }
+}
+
