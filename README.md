@@ -1,112 +1,106 @@
 # NERV Fieldnotes
 
-A local-first sticky notes workspace for Arch Linux, with an original interface inspired by NERV headquarters.
-It runs with Python 3 and a modern browser, without installing application dependencies.
+A native Rust sticky notes application for Arch Linux, using GTK4 and SQLite.
+Launching it opens your most recently edited sticky note in a small desktop window.
+The three dots in its top-right corner open the complete notes board.
 
-![Fieldnotes desktop preview](docs/preview-desktop.png)
+![Native sticky note](native/assets/preview-sticky.png)
 
-[Mobile preview](docs/preview-mobile.png) · [Design notes](docs/DESIGN.md) · [Verification](docs/VERIFICATION.md)
+## Use it
 
-## Open it
+Launch **NERV Fieldnotes** from your application menu, or run `~/.local/bin/nerv-fieldnotes`.
+Type directly into the sticky.
+Changes save automatically after a short pause and when you close the window.
+Use **+** for another sticky and the dots menu for all notes, forwarding, archive, and trash.
+Expand **Note options** for tags, paper color, pinning, and checklist mode.
 
-After local installation, launch **NERV Fieldnotes** from the application menu or run `~/.local/bin/nerv-fieldnotes`.
-The local address is http://127.0.0.1:4783.
-
-```sh
-bash scripts/install-local.sh
-```
-
-The installer creates and enables a systemd user service.
-It runs at login and restarts after a failure.
-It adds a desktop entry and the `fieldnotes-agent` command under `~/.local/bin`.
-Keep this checkout in place because the service and launchers reference it.
-The service binds to loopback only.
-
-For a temporary session instead:
-
-```sh
-python3 server.py
-```
-
-## Everyday notes
-
-Use **New note** to capture a title and text.
-Add comma-separated tags, choose a paper color, pin the note, or turn on checklist mode.
-The editor saves a recovery draft while you type.
-Use **Save note** to put the draft on the board.
-Close the editor to keep the draft, or choose **Discard draft** to remove it.
-One recovery draft is retained at a time.
-
-Cards provide pin, forward, duplicate, archive, and trash actions with descriptive hover labels.
-Archived and trashed notes can be restored.
-Moving a note provides Undo.
-Permanent deletion requires confirmation.
-Search matches titles, bodies, and tags together.
-Use the sidebar tags to narrow the board.
-Choose grid or list layout and sort by edited date, creation date, or title.
+Each sticky is an independent, resizable native window.
+Its size is remembered when you close it.
+The note board provides search, pinned notes, archive, trash, restoration, duplication, and agent inbox access.
+The board is built separately from the default sticky experience and stays hidden until requested.
 
 | Shortcut | Action |
 | --- | --- |
-| Ctrl+N | New note |
-| Ctrl+K or Ctrl+/ | Search |
-| Ctrl+Enter | Save editor |
-| Escape | Close dialog or clear search |
-| Ctrl+Z outside text fields | Undo last move |
-| ? | Shortcut reference |
+| Ctrl+N | New sticky |
+| Ctrl+K or Ctrl+/ | Open board and search |
+| Ctrl+S | Save current sticky |
+| Ctrl+Enter | Save and close current sticky |
+| Escape | Close sticky or hide board |
+| Ctrl+Z | Undo the last move from the board, outside text fields |
+| F1 | Keyboard reference |
 
-Browser and window-manager reserved shortcuts can take precedence.
-All actions are also available as buttons.
+## Install on Arch Linux
 
-## Forward to agents
-
-Choose the arrow on a card, name an agent, and add optional instructions.
-Review the exact handoff before copying, downloading Markdown, or sending it to the local inbox.
-The inbox is a pull queue: it does not execute commands or start agents.
-An acknowledgement means received, not completed.
-The local inbox requires the local app; the hosted app supports copy and download.
+The runtime requires GTK4 and SQLite.
+Building also requires Rust and pkgconf.
 
 ```sh
-~/.local/bin/fieldnotes-agent list
-~/.local/bin/fieldnotes-agent --help
+sudo pacman -S --needed rust pkgconf gtk4 sqlite
+bash scripts/install-native.sh
 ```
 
-See [the handoff guide](docs/AGENT-HANDOFF.md) for the HTTP protocol and CLI examples.
+The installer builds an optimized binary, installs it under `~/.local/bin`, registers the app in the desktop application list, and adds **New note** and **All notes** launcher actions.
+The installed binary runs independently of the repository.
+It replaces the earlier browser launcher and disables its old local service while preserving existing data.
+
+```sh
+nerv-fieldnotes             # most recent sticky
+nerv-fieldnotes --new-note  # new sticky
+nerv-fieldnotes --board     # full board
+```
+
+Use `~/.local/bin/nerv-fieldnotes` if `~/.local/bin` is not on your PATH.
+
+## Forward to your agents
+
+Open the dots menu and choose **Forward to agent**.
+Review the handoff, add a destination and instructions, then copy it, save Markdown, or send it to the local inbox.
+Agents can use the included native CLI directly, without a local web service.
+
+```sh
+~/.local/bin/fieldnotes-agent list --agent codex
+~/.local/bin/fieldnotes-agent show HANDOFF_ID
+~/.local/bin/fieldnotes-agent ack HANDOFF_ID
+```
+
+The CLI returns JSON.
+An acknowledgement means received, not completed.
+The app never executes note text or starts an agent automatically.
 
 ## Data and backups
 
-Notes live in localStorage in the browser profile and origin where you open the app.
-The private hosted version and local app have independent notes.
-Use **Settings & backups** to export all notes, including archived and trashed notes, as JSON.
-Import validates the whole file, merges IDs, and keeps the newer edited note.
-An invalid backup never replaces your notes.
-Browser data deletion removes browser notes, so keep exported backups somewhere durable.
-The service worker caches the interface for offline use after the first successful visit.
+Notes, drafts, settings, and the inbox live in `$XDG_DATA_HOME/nerv-fieldnotes/inbox.sqlite3`, normally `~/.local/share/nerv-fieldnotes/inbox.sqlite3`.
+They are stored outside Git and survive uninstalling the application.
+Handoff Markdown snapshots live in the neighboring `inbox/` directory.
 
-Forwarded handoffs live in SQLite at `$XDG_DATA_HOME/nerv-fieldnotes/inbox.sqlite3`, normally `~/.local/share/nerv-fieldnotes/inbox.sqlite3`.
-Markdown copies are stored in its `inbox/` directory.
-The CLI uses the HTTP API by default.
-Back up the data directory while the service is stopped for a consistent manual copy.
-
-## Verify and maintain
+Use the board's **Export backup** and **Import backup** controls, or the CLI:
 
 ```sh
-npm test
-node --check dist/app.js
-systemctl --user status nerv-fieldnotes.service
-journalctl --user -u nerv-fieldnotes.service -n 30
+nerv-fieldnotes export backup.json
+nerv-fieldnotes import backup.json
 ```
 
-The browser suite uses Playwright when it is installed in the environment.
-Run it with `node tests/browser.mjs`.
-Run the layout regression with `node tests/layout.mjs` while the local service is running.
-The browser suite creates its own temporary server and database.
-Both suites use an isolated browser context and leave your notes alone.
-Set `PLAYWRIGHT_MODULE_PATH` and `CHROMIUM_PATH` if the dependencies are outside normal resolution paths.
+JSON exports include saved notes in all states.
+They do not include the agent inbox, so back up the entire data directory separately when needed.
+Imports validate the complete file before merging and keep the newer version of a note with the same ID.
+Version 1 backups from the original browser app can be imported directly.
+The original source is preserved at the [`v1-web` tag](https://github.com/bananatruck/nerv-fieldnotes/tree/v1-web).
+Browser-local notes must be exported from that version before import.
+
+## Development
 
 ```sh
-bash scripts/uninstall-local.sh
+cargo test --manifest-path native/Cargo.toml --locked -j 1
+cargo clippy --manifest-path native/Cargo.toml --all-targets --locked -j 1 -- -D warnings
+cargo build --manifest-path native/Cargo.toml --release --locked -j 1
 ```
 
-Uninstall removes the service and launchers while keeping your data and repository.
-This is a personal single-user application.
-It does not sync devices or provide collaborative editing.
+[Usage and CLI guide](native/README.md) · [Native design](native/DESIGN.md) · [Verification](native/VERIFICATION.md)
+
+The desktop window manager controls window placement and any always-on-top setting.
+Pinning a note marks it as a favorite in Fieldnotes.
+The app does not synchronize devices.
+
+```sh
+bash scripts/uninstall-native.sh
+```
