@@ -225,3 +225,24 @@ fieldset.field legend { margin-bottom: 10px; }
   .search-wrap kbd { display: none; }
 }
 
+/* section: tablet adaptation */
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 172px minmax(0, 1fr); }
+  .sidebar { padding-inline: 9px; }
+  .brand { margin-inline: 5px; gap: 7px; }
+  .brand-name { font-size: 23px; }
+  .brand-mark { width: 31px; height: 37px; }
+  .main { padding-inline: 22px; }
+  .toolbar { flex-wrap: wrap; gap: 12px; }
+  .search-wrap { max-width: none; flex-basis: 100%; }
+  .toolbar-actions { width: 100%; justify-content: flex-end; }
+  .hero-meta { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .note-grid { gap: 14px; }
+  .note { padding-inline: 15px; }
+  .view-list .note { grid-template-columns: 1fr auto; }
+  .view-list .note-preview { grid-row: 3; grid-column: 1 / -1; margin-top: 10px; }
+  .view-list .note-bottom { grid-column: 2; grid-row: 1 / span 2; }
+  .view-list .note-tags { grid-row: 4; }
+}
+
