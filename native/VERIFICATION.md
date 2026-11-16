@@ -3,6 +3,17 @@
 The Rust application is tested against its SQLite data and actual GTK widgets.
 The test workspace uses a temporary data directory, keeping personal notes untouched.
 
+## Verified release results
+
+- 26 Rust unit tests passed.
+- 4 executable CLI integration scenarios passed against the release binary.
+- 22 native GTK checks passed against the optimized release binary, with critical GTK messages treated as fatal.
+- Single-instance dispatch passed for repeated board and new-note requests on an isolated session bus.
+- Clippy passed for all targets with warnings denied.
+- The installed executable checksum matches the verified release binary.
+- The desktop entry passed validation and is visible through the desktop application registry.
+- The legacy browser service is disabled and inactive.
+
 ## Checks
 
 - Unit tests cover note validation, search, task toggles, import recency, SQLite persistence, recovery drafts, and compatible inbox delivery.

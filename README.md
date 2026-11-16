@@ -17,7 +17,7 @@ Expand **Note options** for tags, paper color, pinning, and checklist mode.
 Each sticky is an independent, resizable native window.
 Its size is remembered when you close it.
 The note board provides search, pinned notes, archive, trash, restoration, duplication, and agent inbox access.
-The board is built separately from the default sticky experience and stays hidden until requested.
+The board stays hidden until requested.
 
 | Shortcut | Action |
 | --- | --- |
