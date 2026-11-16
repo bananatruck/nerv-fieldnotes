@@ -1,0 +1,21 @@
+/* section: design tokens */
+:root {
+  color-scheme: dark;
+  --ink: #111310;
+  --canvas: #101310;
+  --sidebar: #151814;
+  --panel: #1a1e18;
+  --line: #363b2d;
+  --line-soft: #272c23;
+  --text: #e4e2d5;
+  --muted: #9b9e8c;
+  --amber: #e4a640;
+  --orange: #e7733b;
+  --red: #d9513a;
+  --lime: #bdcf82;
+  --paper: #e7e3ce;
+  --mono: 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+  --sans: 'Liberation Sans', 'DejaVu Sans', sans-serif;
+  --display: 'Impact', 'Arial Narrow', 'Liberation Sans Narrow', var(--sans);
+}
+
