@@ -184,3 +184,13 @@ function saveEditor(event) {
   if (saved) { try { saveDraft(null); } catch {} initialEditorValue = JSON.stringify(editorValue()); $('#editor').close(); toast('Note saved.'); }
 }
 
+// section: handoff preview
+function handoffText() { return markdown(state.forwarding, $('#agent-name').value.trim() || 'Agent', $('#agent-instructions').value.trim()); }
+function refreshHandoff() { if (state.forwarding) $('#handoff-preview').value = handoffText(); }
+async function openForward(note) {
+  state.forwarding = note; $('#agent-instructions').value = ''; refreshHandoff();
+  $('#forward').showModal(); await checkLocal();
+  $('#send-handoff').disabled = !state.local;
+  $('#inbox-status').textContent = state.local ? 'Local inbox connected. Send a durable handoff to your agent queue.' : 'Local inbox is available in the installed app at http://127.0.0.1:4783. Copy and download work here.';
+}
+
