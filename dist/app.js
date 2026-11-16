@@ -138,3 +138,17 @@ async function deleteForever(note) {
   if (dialog.returnValue === 'delete' && persist(state.notes.filter(n => n.id !== note.id))) { state.undo = null; toast('Note permanently deleted.'); }
 }
 
+// section: editor data
+function editorValue() {
+  return { id: state.editing, title: $('#note-title').value, body: $('#note-body').value, tags: $('#note-tags').value, color: state.color, pinned: $('#note-pinned').checked, checklist: $('#note-checklist').checked };
+}
+function setEditor(data) {
+  $('#note-title').value = data.title || ''; $('#note-body').value = data.body || '';
+  $('#note-tags').value = Array.isArray(data.tags) ? data.tags.join(', ') : data.tags || '';
+  $('#note-pinned').checked = Boolean(data.pinned); $('#note-checklist').checked = Boolean(data.checklist);
+  state.color = COLORS.includes(data.color) ? data.color : 'paper'; renderColors();
+}
+function renderColors() {
+  $('#note-colors').replaceChildren(...COLORS.map(color => el('button', { type: 'button', class: `color-option${state.color === color ? ' selected' : ''}`, 'data-color': color, 'aria-label': `${color} note`, 'aria-pressed': String(state.color === color), title: color, onclick: () => { state.color = color; renderColors(); queueDraft(); } }, state.color === color ? '✓' : '')));
+}
+
