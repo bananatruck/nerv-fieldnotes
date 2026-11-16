@@ -46,3 +46,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round
 .sidebar { background: var(--sidebar); border-right: 1px solid var(--line); position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 30px 18px 20px; z-index: 20; }
 .main { min-width: 0; background-image: linear-gradient(#ffffff02 1px, transparent 1px), linear-gradient(90deg, #ffffff02 1px, transparent 1px); background-size: 28px 28px; padding: 0 42px; }
 
+/* section: brand */
+.brand { display: flex; gap: 10px; align-items: center; text-decoration: none; margin: 0 6px 48px; }
+.brand-mark { display: grid; place-items: center; width: 37px; height: 43px; background: var(--orange); color: var(--ink); font-family: var(--display); font-size: 28px; font-weight: 900; clip-path: polygon(25% 0, 100% 0, 100% 72%, 72% 100%, 0 100%, 0 25%); }
+.brand-name { font-family: var(--display); font-size: 26px; font-weight: 900; letter-spacing: -.8px; line-height: .95; }
+.brand-name small, .brand-subtitle { font: 9px/1.5 var(--mono); display: block; letter-spacing: 2px; color: var(--muted); margin-top: 6px; }
+
