@@ -320,3 +320,12 @@ $('#recover-storage').addEventListener('click', () => download('fieldnotes-stora
 document.addEventListener('keydown', keyboard);
 window.addEventListener('pagehide', flushDraft);
 
+// section: cross-tab consistency
+window.addEventListener('storage', event => {
+  if (event.key !== 'nerv-fieldnotes.v1') return;
+  try {
+    const latest = loadNotes();
+    if (latest) { state.notes = latest; state.readonly = false; render(); toast('Notes updated from another window.'); }
+  } catch { toast('Another window wrote unreadable data. Your current notes are still shown.'); }
+});
+
