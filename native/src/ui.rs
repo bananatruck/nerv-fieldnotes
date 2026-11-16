@@ -85,7 +85,6 @@ impl Ui {
             );
         }
         let window = gtk::ApplicationWindow::builder()
-            .application(app)
             .title("NERV Fieldnotes · All notes")
             .default_width(1220)
             .default_height(780)
@@ -217,6 +216,7 @@ impl Ui {
             let u = ui.clone();
             ui.window.connect_close_request(move |_| {
                 u.window.set_visible(false);
+                u.window.set_application(None::<&gtk::Application>);
                 if !u
                     .app
                     .windows()
@@ -236,6 +236,7 @@ impl Ui {
         self.status.set_text(value);
     }
     pub fn show_board(self: &Rc<Self>) {
+        self.window.set_application(Some(&self.app));
         self.window.present();
         self.refresh();
     }
@@ -842,7 +843,7 @@ impl Ui {
     }
     fn help(&self) {
         let dialog=gtk::AlertDialog::builder().message("Keyboard shortcuts").detail("Ctrl+N  New sticky note\nCtrl+K  Open board and search\nCtrl+Enter  Save and close note\nCtrl+S  Save now\nCtrl+Z  Undo move on the board\nEscape  Close sticky or hide board\nF1  Show shortcuts\n\nNotes save automatically while you type. Use the three dots on a sticky to open all notes.").buttons(["Close"]).build();
-        dialog.show(Some(&self.window));
+        dialog.show(self.app.active_window().as_ref());
     }
     fn install_actions(self: &Rc<Self>) {
         for (name, keys) in [

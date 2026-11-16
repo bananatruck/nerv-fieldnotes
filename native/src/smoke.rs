@@ -31,6 +31,10 @@ pub fn schedule(ui: Rc<Ui>) {
     let start = (|| -> Result<(), String> {
         ui.launch_recent()?;
         check(
+            ui.app.windows().len() == 1,
+            "startup registers only the sticky with the desktop",
+        )?;
+        check(
             !ui.window.is_visible(),
             "launch keeps the full board hidden",
         )?;
