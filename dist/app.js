@@ -227,3 +227,13 @@ async function sendHandoff() {
   finally { button.disabled = !state.local; }
 }
 
+// section: inbox loading
+async function refreshInbox() {
+  await checkLocal();
+  if (state.local) {
+    try { const data = await api('/api/inbox'); state.inbox = data.items; state.inboxPath = data.inboxPath; }
+    catch { state.local = false; toast('Could not read local inbox. Try Refresh.'); }
+  }
+  if (state.view === 'inbox') render(); else renderNavigation();
+}
+
