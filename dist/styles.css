@@ -246,3 +246,30 @@ fieldset.field legend { margin-bottom: 10px; }
   .view-list .note-tags { grid-row: 4; }
 }
 
+/* section: mobile navigation */
+@media (max-width: 640px) {
+  .app-shell { display: block; }
+  .sidebar { display: none; position: fixed; width: 238px; left: 0; top: 0; box-shadow: 8px 0 0 #0008; padding: 24px 18px; }
+  .sidebar.open, body.nav-open .sidebar { display: flex; }
+  .main { padding-inline: 19px; }
+  .topbar { min-height: 59px; gap: 10px; }
+  .mobile-nav-toggle { display: inline-grid; flex-shrink: 0; }
+  .breadcrumb { margin-right: auto; font-size: 8px; letter-spacing: .3px; }
+  .system-status { font-size: 8px; letter-spacing: .4px; gap: 5px; }
+  .hero { padding-top: 30px; padding-bottom: 24px; }
+  .eyebrow { font-size: 8px; letter-spacing: 1.5px; }
+  h1 { font-size: 66px; letter-spacing: -3px; }
+  .hero-description { max-width: 290px; font-size: 12px; }
+  .toolbar { margin-bottom: 18px; padding: 14px 0; }
+  .toolbar-actions .button { margin-left: auto; }
+  .toolbar select { max-width: 126px; font-size: 10px; }
+  .button { padding-inline: 11px; }
+  .button-primary kbd { display: none; }
+  .note-grid { grid-template-columns: 1fr; gap: 17px; }
+  .note { min-height: 225px; padding: 17px 19px 13px; }
+  .note-title { font-size: 22px; }
+  .note-preview { -webkit-line-clamp: 7; font-size: 13px; }
+  .statusbar { font-size: 8px; }
+  .toast { bottom: 16px; right: 16px; }
+}
+
