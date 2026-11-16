@@ -237,3 +237,18 @@ async function refreshInbox() {
   if (state.view === 'inbox') render(); else renderNavigation();
 }
 
+// section: inbox presentation
+function renderInbox() {
+  $('#result-count').textContent = `${state.inbox.length} HANDOFFS`;
+  const board = $('#notes'); board.replaceChildren();
+  const intro = el('div', { class: 'inbox-intro' }, el('h2', {}, 'A clear handoff. A quieter head.'), el('p', {}, state.local ? 'Queued notes are ready for your agents to read. Acknowledged means received, not completed.' : 'The local inbox lives on your Arch Linux desktop. Open http://127.0.0.1:4783 after installing the service. Copy and download are available from any note.'), el('button', { class: 'button button-ghost', onclick: refreshInbox }, 'Refresh inbox'));
+  board.append(intro);
+  if (!state.local) return;
+  if (!state.inbox.length) board.append(el('div', { class: 'empty-state' }, el('h2', {}, 'No handoffs yet.'), el('p', {}, 'Choose the arrow on a note to forward it to an agent.')));
+  for (const item of state.inbox) {
+    const card = el('article', { class: 'note inbox-item', 'data-color': item.status === 'pending' ? 'amber' : 'green' }, el('div', { class: 'note-top' }, el('span', { class: 'note-category' }, item.status.toUpperCase())), el('h2', { class: 'inbox-title' }, item.title), el('p', {}, `To: ${item.agent}`), el('pre', { class: 'note-preview' }, item.body), el('time', { datetime: item.createdAt }, relativeDate(item.createdAt)));
+    if (item.status === 'pending') card.append(el('button', { class: 'button button-ghost', onclick: async () => { try { await api(`/api/inbox/${encodeURIComponent(item.id)}/ack`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }); await refreshInbox(); toast('Handoff acknowledged.'); } catch (error) { toast(error.message); } } }, 'Acknowledge receipt'));
+    board.append(card);
+  }
+}
+
