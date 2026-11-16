@@ -159,3 +159,15 @@ kbd { font-family: var(--mono); }
 .statusbar > span:last-child { color: #b8bd9c; }
 .statusbar .status-dot { width: 5px; height: 5px; margin-right: 6px; }
 
+/* section: modal shell */
+.dialog { width: min(650px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); padding: 0; color: var(--text); background: #1a1e18; border: 1px solid #777d55; box-shadow: 12px 12px 0 #0007; }
+.dialog::backdrop { background: #090d09c9; backdrop-filter: blur(4px); }
+.dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.dialog-header h2 { margin: 0; color: var(--amber); font-family: var(--display); font-size: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: -.4px; }
+.dialog-header .eyebrow { margin-bottom: 5px; font-size: 8px; }
+.dialog-body { padding: 24px; }
+.dialog-footer { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; padding: 18px 24px; border-top: 1px solid var(--line); background: #141811; }
+.dialog-footer .hint { margin-right: auto; font-size: 10px; color: var(--muted); }
+.dialog p { color: #b6bca6; }
+.dialog form { margin: 0; }
+
