@@ -291,3 +291,12 @@ function keyboard(event) {
   }
 }
 
+// section: toolbar and navigation bindings
+$$('.nav-link[data-view]').forEach(button => button.addEventListener('click', () => navigate(button.dataset.view)));
+$('#new-note').addEventListener('click', () => openEditor());
+$('#search').addEventListener('input', event => { state.query = event.target.value; render(); });
+$('#sort').addEventListener('change', event => { state.sort = event.target.value; render(); });
+for (const mode of ['grid', 'list']) $(`#${mode}-view`).addEventListener('click', () => { settings.layout = mode; saveSettings(); applySettings(); });
+$('#mobile-menu').addEventListener('click', () => { const open = $('.sidebar').classList.toggle('open'); document.body.classList.toggle('nav-open', open); $('#mobile-menu').setAttribute('aria-expanded', String(open)); });
+$('#theme').addEventListener('change', event => { settings.theme = event.target.value; saveSettings(); applySettings(); });
+
