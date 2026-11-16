@@ -111,6 +111,16 @@ cargo clippy --manifest-path native/Cargo.toml --locked --all-targets -j 1 -- -D
 cargo build --manifest-path native/Cargo.toml --release --locked -j 1
 ```
 
+The test command includes real headless CLI process checks.
+To verify single-instance desktop dispatch after building, run:
+
+```sh
+bash native/tests/single-instance.sh target/release/nerv-fieldnotes
+```
+
+That check uses a private session bus and temporary data directory.
+It sends **All notes** and **New note** requests to the running native process.
+It leaves your normal app instance and notes alone.
 The app uses the installed GTK4 and SQLite libraries.
 
 ## Uninstall the application
