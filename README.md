@@ -3,6 +3,10 @@
 A local-first sticky notes workspace for Arch Linux, with an original interface inspired by NERV headquarters.
 It runs with Python 3 and a modern browser, without installing application dependencies.
 
+![Fieldnotes desktop preview](docs/preview-desktop.png)
+
+[Mobile preview](docs/preview-mobile.png) · [Design notes](docs/DESIGN.md) · [Verification](docs/VERIFICATION.md)
+
 ## Open it
 
 After local installation, launch **NERV Fieldnotes** from the application menu or run `~/.local/bin/nerv-fieldnotes`.
@@ -94,6 +98,9 @@ journalctl --user -u nerv-fieldnotes.service -n 30
 
 The browser suite uses Playwright when it is installed in the environment.
 Run it with `node tests/browser.mjs`.
+Run the layout regression with `node tests/layout.mjs` while the local service is running.
+The browser suite creates its own temporary server and database.
+Both suites use an isolated browser context and leave your notes alone.
 Set `PLAYWRIGHT_MODULE_PATH` and `CHROMIUM_PATH` if the dependencies are outside normal resolution paths.
 
 ```sh
