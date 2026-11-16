@@ -310,3 +310,13 @@ $('#copy-handoff').addEventListener('click', copyHandoff);
 $('#download-handoff').addEventListener('click', downloadHandoff);
 $('#send-handoff').addEventListener('click', sendHandoff);
 
+// section: data and help bindings
+$('#settings-button').addEventListener('click', openSettings);
+for (const id of ['help-button', 'footer-help']) $(`#${id}`).addEventListener('click', () => $('#help').showModal());
+$('#export').addEventListener('click', exportBackup);
+$('#import').addEventListener('click', () => $('#import-file').click());
+$('#import-file').addEventListener('change', importBackup);
+$('#recover-storage').addEventListener('click', () => download('fieldnotes-storage-recovery.txt', localStorage.getItem('nerv-fieldnotes.v1') || '', 'text/plain'));
+document.addEventListener('keydown', keyboard);
+window.addEventListener('pagehide', flushDraft);
+
