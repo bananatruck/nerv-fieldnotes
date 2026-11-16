@@ -44,3 +44,27 @@ function applySettings() {
   }
 }
 
+// section: navigation
+function navigate(view, tag = '') {
+  state.view = view; state.tag = tag;
+  if (view === 'inbox') refreshInbox();
+  $('.sidebar').classList.remove('open'); document.body.classList.remove('nav-open');
+  $('#search').disabled = view === 'inbox';
+  $('#sort').disabled = view === 'inbox';
+  render();
+}
+function renderNavigation() {
+  const count = status => state.notes.filter(n => n.status === status).length;
+  $('#count-all').textContent = count('active'); $('#count-archive').textContent = count('archived');
+  $('#count-trash').textContent = count('deleted');
+  $('#count-pinned').textContent = state.notes.filter(n => n.status === 'active' && n.pinned).length;
+  $('#count-inbox').textContent = state.inbox.filter(n => n.status === 'pending').length;
+  $('#active-count').textContent = String(count('active')).padStart(2, '0');
+  const title = { all: 'All notes', pinned: 'Pinned', archive: 'Archive', trash: 'Trash', inbox: 'Agent inbox' }[state.view];
+  $('#view-label').textContent = title.toUpperCase();
+  $('#section-label').textContent = state.tag ? `TAG / ${state.tag}` : title === 'All notes' ? 'YOUR NOTES' : title.toUpperCase();
+  $$('.nav-link[data-view]').forEach(b => { const selected = b.dataset.view === state.view && !state.tag; b.classList.toggle('active', selected); if (selected) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  const tags = [...new Set(state.notes.filter(n => n.status === 'active').flatMap(n => n.tags))].sort();
+  $('#tag-nav').replaceChildren(...tags.map(tag => el('button', { class: `nav-link${state.tag === tag ? ' active' : ''}`, onclick: () => navigate('all', state.tag === tag ? '' : tag) }, `# ${tag}`)));
+}
+
