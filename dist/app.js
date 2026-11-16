@@ -68,3 +68,17 @@ function renderNavigation() {
   $('#tag-nav').replaceChildren(...tags.map(tag => el('button', { class: `nav-link${state.tag === tag ? ' active' : ''}`, onclick: () => navigate('all', state.tag === tag ? '' : tag) }, `# ${tag}`)));
 }
 
+// section: note task rendering
+function notePreview(note) {
+  if (!note.checklist) return el('p', { class: 'note-preview' }, note.body || 'An empty note. Make it yours.');
+  const list = el('div', { class: 'note-preview task-list' });
+  note.body.split('\n').slice(0, 6).forEach((line, index) => {
+    if (!line.trim()) return;
+    const checked = /^\s*- \[x\]/i.test(line);
+    const checkbox = el('input', { type: 'checkbox', 'aria-label': line.replace(/^\s*- \[[ x]\]\s*/i, '') || 'Task', onchange: () => updateNote(note.id, { body: toggleTask(note.body, index) }) });
+    checkbox.checked = checked; checkbox.disabled = note.status !== 'active';
+    list.append(el('label', { class: checked ? 'task checked' : 'task' }, checkbox, el('span', {}, line.replace(/^\s*- \[[ x]\]\s*/i, ''))));
+  });
+  return list;
+}
+
