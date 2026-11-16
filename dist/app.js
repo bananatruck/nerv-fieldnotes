@@ -201,3 +201,15 @@ async function copyHandoff() {
 }
 function downloadHandoff() { download(`${filename(state.forwarding.title)}.md`, handoffText(), 'text/markdown'); toast('Markdown handoff downloaded.'); }
 
+// section: local inbox discovery
+async function api(path, options = {}) {
+  const response = await fetch(path, { ...options, signal: AbortSignal.timeout(4000), cache: 'no-store' });
+  if (!response.ok) throw new Error(`Inbox request failed (${response.status}).`);
+  return response.json();
+}
+async function checkLocal() {
+  if (!['127.0.0.1', 'localhost'].includes(location.hostname)) { state.local = false; return; }
+  try { const data = await api('/api/health'); state.local = data.ok === true && data.service === 'nerv-fieldnotes'; }
+  catch { state.local = false; }
+}
+
